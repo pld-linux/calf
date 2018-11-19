@@ -6,6 +6,7 @@ License:	LGPL v2.1, GPL v2
 Group:		Applications
 Source0:	https://github.com/calf-studio-gear/calf/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	6935a982f6372551830a3d1968aae929
+Patch0:		fluidsynth2.patch
 URL:		http://calf-studio-gear.org
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -84,6 +85,7 @@ Bashowe dopełnianie parametrów dla Calf Studio Gear.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__libtoolize}
