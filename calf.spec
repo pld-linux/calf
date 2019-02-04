@@ -1,12 +1,13 @@
 Summary:	Calf Studio Gear - audio plug-in pack for LV2 and Jack
 Name:		calf
 Version:	0.90.1
-Release:	1
+Release:	2
 License:	LGPL v2.1, GPL v2
 Group:		Applications
 Source0:	https://github.com/calf-studio-gear/calf/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	6935a982f6372551830a3d1968aae929
 Patch0:		fluidsynth2.patch
+Patch1:		lv2.patch
 URL:		http://calf-studio-gear.org
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -18,7 +19,7 @@ BuildRequires:	gtk+2-devel >= 2:2.12.0
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	lash-devel
 BuildRequires:	libtool
-BuildRequires:	lv2-devel
+BuildRequires:	lv2-devel >= 1.14
 BuildRequires:	slv2-devel
 #BuildRequires:	sordi-devel
 Requires:	%{name}-lv2 = %{version}-%{release}
@@ -86,6 +87,7 @@ Bashowe dopełnianie parametrów dla Calf Studio Gear.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}

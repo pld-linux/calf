@@ -1,0 +1,102 @@
+From 021850be25992b8a090182a05ad62660414c964f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sat, 19 Jan 2019 21:48:29 +0100
+Subject: [PATCH 1/2] Fix detection of LV2 for latest git
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+LV2 removed lv2-core.pc in [1]. So find lv2 and set required version to 1.1.4
+which was released in September 2016 and should be avalaible on most
+environments. This should be compatible to LV2 1.1.14 because from pkg-config
+point of view lv2-core.pc and lv2.pc look similar.
+
+[1] https://github.com/drobilla/lv2/commit/4db67120efca2d4c200d2e1ba5cf3d7b97cab97e
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index b9c3d5007..a03687731 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -79,7 +79,7 @@ if test "$JACK_FOUND" = "yes"; then
+   PKG_CHECK_MODULES(JACK_RENAME_PORT, jack >= 1.9.11, JACK_HAS_RENAME="yes", JACK_HAS_RENAME_DUMMY="no")
+ fi
+ 
+-PKG_CHECK_MODULES(LV2_DEPS, lv2core >= 6, LV2_FOUND="yes", LV2_FOUND="no")
++PKG_CHECK_MODULES(LV2_DEPS, lv2 >= 1.1.14, LV2_FOUND="yes", LV2_FOUND="no")
+ 
+ PKG_CHECK_MODULES(LASH_DEPS, lash-1.0 >= 0.6.0,
+   AC_CHECK_LIB([lash], [lash_client_is_being_restored], LASH_0_6_FOUND="yes", LASH_0_6_FOUND="no"),
+
+From 855cf20b9bb9fec30b72fa05a9b4cd28a1b4d35d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sat, 19 Jan 2019 23:00:49 +0100
+Subject: [PATCH 2/2] Find headers for all versions of LV2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/calf/lv2_options.h | 2 +-
+ src/calf/lv2_ui.h      | 2 +-
+ src/calf/lv2wrap.h     | 2 +-
+ src/makerdf.cpp        | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/calf/lv2_options.h b/src/calf/lv2_options.h
+index 29568b8d0..d66153da4 100644
+--- a/src/calf/lv2_options.h
++++ b/src/calf/lv2_options.h
+@@ -20,7 +20,7 @@
+ #include <stdint.h>
+ 
+ #include "lv2_urid.h"
+-#include "lv2.h"
++#include "lv2/lv2plug.in/ns/lv2core/lv2.h"
+ 
+ #define LV2_OPTIONS_URI    "http://lv2plug.in/ns/ext/options"
+ #define LV2_OPTIONS_PREFIX LV2_OPTIONS_URI "#"
+diff --git a/src/calf/lv2_ui.h b/src/calf/lv2_ui.h
+index b802ec590..c3e60822f 100644
+--- a/src/calf/lv2_ui.h
++++ b/src/calf/lv2_ui.h
+@@ -27,7 +27,7 @@
+ 
+ #include <stdint.h>
+ 
+-#include "lv2.h"
++#include "lv2/lv2plug.in/ns/lv2core/lv2.h"
+ 
+ #define LV2_UI_URI "http://lv2plug.in/ns/extensions/ui"
+ #define LV2_UI_PREFIX LV2_UI_URI "#"
+diff --git a/src/calf/lv2wrap.h b/src/calf/lv2wrap.h
+index 8d6b13c4a..d19eae7b2 100644
+--- a/src/calf/lv2wrap.h
++++ b/src/calf/lv2wrap.h
+@@ -25,7 +25,7 @@
+ 
+ #include <string>
+ #include <vector>
+-#include <lv2.h>
++#include "lv2/lv2plug.in/ns/lv2core/lv2.h"
+ #include <calf/giface.h>
+ #include <calf/lv2_atom.h>
+ #include <calf/lv2_atom_util.h>
+diff --git a/src/makerdf.cpp b/src/makerdf.cpp
+index 0b6cec5c1..9f782534b 100644
+--- a/src/makerdf.cpp
++++ b/src/makerdf.cpp
+@@ -22,7 +22,7 @@
+ #include <calf/preset.h>
+ #include <calf/utils.h>
+ #if USE_LV2
+-#include <lv2.h>
++#include "lv2/lv2plug.in/ns/lv2core/lv2.h"
+ #include <calf/lv2_atom.h>
+ #include <calf/lv2_options.h>
+ #include <calf/lv2_state.h>
