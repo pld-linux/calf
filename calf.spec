@@ -74,9 +74,7 @@ Summary(pl.UTF-8):	Bashowe dopełnianie parametrów dla Calf Studio Gear
 Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2.0
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description -n bash-completion-calf
 Bash completion for Calf Studio Gear.
