@@ -1,7 +1,7 @@
 Summary:	Calf Studio Gear - audio plug-in pack for LV2 and Jack
 Name:		calf
 Version:	0.90.1
-Release:	2
+Release:	3
 License:	LGPL v2.1, GPL v2
 Group:		Applications
 Source0:	https://github.com/calf-studio-gear/calf/archive/%{version}/%{name}-%{version}.tar.gz
